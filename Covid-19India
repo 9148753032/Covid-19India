@@ -4,7 +4,7 @@ const path = require("path");
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
 app.use(express.json());
-const dbpath = path.join(__dirname, "covid19India.db");
+const dbPath = path.join(__dirname, "covid19India.db");
 let db = null;
 
 const objectSnakeToCamel = (newObject) => {
@@ -91,12 +91,12 @@ app.post("/districts/", async (request, response) => {
   INSERT INTO
     district (district_name,state_id,cases,cured,active,deaths)
   VALUES
-    ('${districtName}'),
+    ('${districtName}',
     ${stateId},
     ${cases},
     ${cured},
     ${active},
-    ${deaths},
+    ${deaths}
 );`;
   const addDistrict = await db.run(newDistrict);
 
@@ -130,7 +130,7 @@ app.delete("/districts/:districtId/", async (request, response) => {
 });
 
 //Update
-app.put("/districts/:district/", async (request, response) => {
+app.put("/districts/:districtId/", async (request, response) => {
   const { districtId } = request.params;
   const districtDetails = request.body;
   const {
@@ -185,4 +185,3 @@ app.get("/districts/:districtId/details/", async (request, response) => {
 });
 
 module.exports = app;
-
